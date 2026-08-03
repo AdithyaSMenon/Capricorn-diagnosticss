@@ -13,21 +13,112 @@ const DEFAULT_STATS = [
 ];
 
 const WHY_ITEMS = [
-  { icon: '🏆', title: '28+ Years of Industry Experience' },
-  { icon: '🌐', title: 'Trusted Across Kerala' },
-  { icon: '✅', title: 'Authorized Diagnostic Brands' },
-  { icon: '📦', title: 'Wide Product Portfolio' },
-  { icon: '🚚', title: 'Reliable Supply Chain' },
-  { icon: '🔬', title: 'Technical Product Support' },
-  { icon: '🤝', title: 'Ethical Business Practices' },
-  { icon: '⚡', title: 'Prompt Delivery' },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 15l-2 5l9-11h-7l2-5l-9 11h7z"/>
+      </svg>
+    ),
+    title: '28+ Years of Industry Experience'
+  },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    ),
+    title: 'Trusted Across Kerala'
+  },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+        <polyline points="22 4 12 14.01 9 11.01"/>
+      </svg>
+    ),
+    title: 'Authorized Diagnostic Brands'
+  },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+      </svg>
+    ),
+    title: 'Wide Product Portfolio'
+  },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <rect x="1" y="3" width="15" height="13"/>
+        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+        <circle cx="5.5" cy="18.5" r="2.5"/>
+        <circle cx="18.5" cy="18.5" r="2.5"/>
+      </svg>
+    ),
+    title: 'Reliable Supply Chain'
+  },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+    ),
+    title: 'Technical Product Support'
+  },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.72-8.72 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    ),
+    title: 'Ethical Business Practices'
+  },
+  {
+    icon: (
+      <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+    ),
+    title: 'Prompt Delivery'
+  },
 ];
 
 const LAB_SOLUTIONS = [
-  { icon: '🧪', title: 'Immunology Analyzers' },
-  { icon: '⚗️', title: 'Clinical Chemistry Analyzers' },
-  { icon: '🩸', title: 'Hematology Analyzers' },
-  { icon: '🔭', title: 'Pathology & Lab Diagnostic Systems' },
+  {
+    icon: (
+      <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M9 3h6v3H9zM10 6v6.5L6.5 19a1 1 0 0 0 .8 1.5h9.4a1 1 0 0 0 .8-1.5L14 12.5V6"/>
+      </svg>
+    ),
+    title: 'Immunology Analyzers'
+  },
+  {
+    icon: (
+      <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 3v18M3 12h18"/>
+      </svg>
+    ),
+    title: 'Clinical Chemistry Analyzers'
+  },
+  {
+    icon: (
+      <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+      </svg>
+    ),
+    title: 'Hematology Analyzers'
+  },
+  {
+    icon: (
+      <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M6 18h12M12 2v12m-4-6l4-4 4 4"/>
+        <circle cx="12" cy="18" r="3"/>
+      </svg>
+    ),
+    title: 'Pathology & Lab Diagnostic Systems'
+  },
 ];
 
 const BRAND_NAMES = [
