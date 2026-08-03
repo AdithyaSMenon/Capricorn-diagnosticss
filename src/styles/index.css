@@ -52,6 +52,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -61,9 +62,11 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
 }
 
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 a { text-decoration: none; color: inherit; }
 button { cursor: pointer; border: none; font-family: var(--font); }
 input, textarea, select { font-family: var(--font); }
@@ -77,9 +80,9 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
   color: var(--gray-900);
 }
-h1 { font-size: clamp(2rem, 4vw, 3.25rem); }
-h2 { font-size: clamp(1.5rem, 3vw, 2.25rem); }
-h3 { font-size: clamp(1.125rem, 2.5vw, 1.5rem); }
+h1 { font-size: clamp(1.75rem, 5vw, 3.25rem); }
+h2 { font-size: clamp(1.35rem, 3.5vw, 2.25rem); }
+h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
 h4 { font-size: 1.125rem; }
 p { color: var(--gray-600); line-height: 1.75; }
 
@@ -90,6 +93,7 @@ p { color: var(--gray-600); line-height: 1.75; }
   max-width: var(--container);
   margin: 0 auto;
   padding: 0 1.5rem;
+  width: 100%;
 }
 
 .section {
@@ -134,6 +138,7 @@ p { color: var(--gray-600); line-height: 1.75; }
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   border-radius: var(--radius-md);
@@ -329,31 +334,6 @@ textarea.form-control {
 }
 
 /* =============================================
-   Toast
-   ============================================= */
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--gray-900);
-  color: var(--white);
-  padding: 1rem 1.5rem;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-xl);
-  font-weight: 500;
-  z-index: 9999;
-  animation: toastIn 0.3s ease;
-}
-
-.toast.success { background: var(--success); }
-.toast.error   { background: var(--error); }
-
-@keyframes toastIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* =============================================
    Divider
    ============================================= */
 .divider {
@@ -370,12 +350,15 @@ textarea.form-control {
 }
 
 @media (max-width: 768px) {
-  .section { padding: 3.5rem 0; }
+  .section { padding: 3rem 0; }
+  .section-sm { padding: 2rem 0; }
+  .section-header { margin-bottom: 2rem; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
   .grid-auto { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 }
 
 @media (max-width: 480px) {
   .container { padding: 0 1rem; }
-  .grid-auto { grid-template-columns: 1fr 1fr; }
+  .grid-auto { grid-template-columns: 1fr; }
+  .btn { width: 100%; }
 }
