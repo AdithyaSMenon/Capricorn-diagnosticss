@@ -161,12 +161,12 @@
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .stat-card {
   text-align: center;
-  padding: 2rem;
+  padding: 1.75rem 1.25rem;
   background: rgba(255,255,255,0.1);
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255,255,255,0.12);
@@ -180,17 +180,19 @@
 }
 
 .stat-value {
-  font-size: 2.75rem;
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
   font-weight: 800;
   color: var(--white);
-  line-height: 1;
+  line-height: 1.1;
   margin-bottom: 0.375rem;
+  white-space: nowrap;
 }
 
 .stat-label {
   font-size: 0.875rem;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.85);
   font-weight: 500;
+  line-height: 1.35;
 }
 
 /* Why Choose Us */
@@ -398,25 +400,37 @@
 /* Responsive */
 @media (max-width: 1024px) {
   .why-grid { grid-template-columns: repeat(2, 1fr); }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
   .solutions-grid-preview { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
   .hero-inner { grid-template-columns: 1fr; }
   .hero-image-wrap { display: none; }
-  .hero { min-height: 75vh; }
+  .hero { min-height: auto; padding: 4rem 0 3rem; }
   .intro-inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .intro-visual { display: none; }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .solutions-grid-preview { grid-template-columns: 1fr 1fr; }
+  .stats-section { padding: 2.5rem 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.875rem; }
+  .stat-card { padding: 1.25rem 0.75rem; }
+  .stat-value { font-size: 1.75rem; }
+  .stat-label { font-size: 0.75rem; }
 }
 
 @media (max-width: 480px) {
   .why-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .stat-card { padding: 1.125rem 0.5rem; }
+  .stat-value { font-size: 1.625rem; }
+  .stat-label { font-size: 0.725rem; }
   .solutions-grid-preview { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; }
   .cta-actions { flex-direction: column; align-items: center; }
   .categories-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 360px) {
+  .stats-grid { grid-template-columns: 1fr; }
 }
