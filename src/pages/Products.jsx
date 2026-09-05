@@ -65,13 +65,89 @@ export default function Products() {
     });
   }, []);
 
+  const DEMO_PRODUCTS = [
+    {
+      id: 'demo-1',
+      name: 'Cobas c 111 Analyzer',
+      brand_id: 'b1',
+      category_id: 'c1',
+      description: 'Compact clinical chemistry analyzer designed for low-volume laboratories offering high precision, safety and ease of use.',
+      brochure_url: 'https://www.roche.com',
+      image_url: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80',
+      categories: { name: 'Clinical Chemistry' },
+      brand_name: 'Roche Diagnostics'
+    },
+    {
+      id: 'demo-2',
+      name: 'Cobas e 411 Analyzer',
+      brand_id: 'b1',
+      category_id: 'c2',
+      description: 'Fully automated immunoassay analyzer for random access processing of ECLIA-based assays.',
+      brochure_url: 'https://www.roche.com',
+      image_url: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80',
+      categories: { name: 'Immunology' },
+      brand_name: 'Roche Diagnostics'
+    },
+    {
+      id: 'demo-3',
+      name: 'HIV TRI-DOT Rapid Test Kit',
+      brand_id: 'b2',
+      category_id: 'c4',
+      description: 'Visual, rapid, sensitive and qualitative immunoassay for the differential detection of antibodies to HIV-1 & HIV-2.',
+      brochure_url: 'https://jmitra.co.in',
+      image_url: 'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=600&q=80',
+      categories: { name: 'Rapid Test Kits' },
+      brand_name: 'J. Mitra & Co. Pvt. Ltd.'
+    },
+    {
+      id: 'demo-4',
+      name: 'HumaCount 5D Hematology Analyzer',
+      brand_id: 'b4',
+      category_id: 'c3',
+      description: '5-part differential hematology system with 3D laser scatter technology for precise cell differentiation.',
+      brochure_url: 'https://www.human.de',
+      image_url: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80',
+      categories: { name: 'Hematology' },
+      brand_name: 'Human'
+    },
+    {
+      id: 'demo-5',
+      name: 'Reckon Chem-7 Biochemistry Analyzer',
+      brand_id: 'b3',
+      category_id: 'c8',
+      description: 'Versatile semi-automated analyzer equipped with built-in thermal printer and wide wavelength selection.',
+      brochure_url: '',
+      image_url: 'https://images.unsplash.com/photo-1583912267670-657592e914a6?auto=format&fit=crop&w=600&q=80',
+      categories: { name: 'Laboratory Instruments' },
+      brand_name: 'Reckon Diagnostics'
+    },
+    {
+      id: 'demo-6',
+      name: 'Glucose GOD-PAP Reagent Pack',
+      brand_id: 'b3',
+      category_id: 'c10',
+      description: 'Enzymatic colorimetric reagent kit for quantitative determination of glucose in human serum or plasma.',
+      brochure_url: '',
+      image_url: 'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=600&q=80',
+      categories: { name: 'Reagents' },
+      brand_name: 'Reckon Diagnostics'
+    }
+  ];
+
   useEffect(() => {
     setLoading(true);
     let query = supabase.from('products').select('*, categories(name)').order('name');
-    if (selectedCat) query = query.eq('categories.name', selectedCat);
 
-    query.then(({ data }) => {
-      if (data) setProducts(data);
+    query.then(({ data, error }) => {
+      if (data && data.length > 0) {
+        setProducts(data);
+      } else {
+        // Fallback to sample products if DB is empty or offline
+        setProducts(DEMO_PRODUCTS);
+      }
+      setLoading(false);
+    }).catch(() => {
+      setProducts(DEMO_PRODUCTS);
       setLoading(false);
     });
   }, [selectedCat]);
@@ -175,7 +251,7 @@ export default function Products() {
             ) : (
               <div className="products-grid">
                 {filtered.map(p => (
-                  <ProductCard key={p.id} product={p} brandName={brands[p.brand_id]} />
+                  <ProductCard key={p.id} product={p} brandName={p.brand_name || brands[p.brand_id]} />
                 ))}
               </div>
             )}

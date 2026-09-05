@@ -18,11 +18,14 @@ import AdminProducts        from './pages/admin/AdminProducts';
 import AdminCompanyInfo     from './pages/admin/AdminCompanyInfo';
 import { AdminCategories, AdminBrands, AdminEnquiries } from './pages/admin/AdminCrud';
 
+import { isSupabaseConfigured } from './lib/supabase';
+
 // Protected Route wrapper
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingSpinner />;
-  if (!user)   return <Navigate to="/admin/login" replace />;
+  // Require login only if Supabase is configured; otherwise allow demo access
+  if (!user && isSupabaseConfigured) return <Navigate to="/admin/login" replace />;
   return children;
 }
 
