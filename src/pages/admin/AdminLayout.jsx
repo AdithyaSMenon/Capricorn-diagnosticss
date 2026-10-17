@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/logo.jpg';
 import '../../styles/admin.css';
 
 const NAV = [
@@ -49,7 +50,7 @@ export default function AdminLayout({ currentPage }) {
       {/* Sidebar */}
       <aside className={`admin-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="admin-logo">
-          <div className="admin-logo-icon">CD</div>
+          <img src={logo} alt="Capricorn Diagnostics" style={{ width: '40px', height: '40px', objectFit: 'contain', borderRadius: '6px', background: 'white', padding: '2px' }} />
           <span>
             Capricorn Diagnostics
             <small>Admin Panel</small>

@@ -142,12 +142,30 @@ export default function Products() {
       if (data && data.length > 0) {
         setProducts(data);
       } else {
-        // Fallback to sample products if DB is empty or offline
-        setProducts(DEMO_PRODUCTS);
+        // Fallback to sample products + any locally added products from Admin
+        try {
+          const raw = localStorage.getItem('capricorn_local_products');
+          const local = raw ? JSON.parse(raw) : [];
+          // Enrich local products with category and brand names if needed
+          const enrichedLocal = local.map(lp => ({
+            ...lp,
+            brand_name: lp.brands?.name || brands[lp.brand_id] || 'Capricorn Diagnostics',
+            categories: lp.categories || { name: categories.find(c => c.id === lp.category_id)?.name || '' }
+          }));
+          setProducts([...enrichedLocal, ...DEMO_PRODUCTS]);
+        } catch {
+          setProducts(DEMO_PRODUCTS);
+        }
       }
       setLoading(false);
     }).catch(() => {
-      setProducts(DEMO_PRODUCTS);
+      try {
+        const raw = localStorage.getItem('capricorn_local_products');
+        const local = raw ? JSON.parse(raw) : [];
+        setProducts([...local, ...DEMO_PRODUCTS]);
+      } catch {
+        setProducts(DEMO_PRODUCTS);
+      }
       setLoading(false);
     });
   }, [selectedCat]);

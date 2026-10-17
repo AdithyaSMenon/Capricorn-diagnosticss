@@ -7,12 +7,32 @@ const CONTACT_INFO = [
   {
     icon: (
       <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+    ),
+    title: 'Address',
+    value: 'TMC 36/6507, Joses Tower, North Bus Stand,\nChembukkavu P.O., Thrissur 680 020',
+  },
+  {
+    icon: (
+      <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.24h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.9a16 16 0 0 0 5.97 5.97l.83-.83a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
       </svg>
     ),
-    title: 'Phone',
-    value: '+91 XXXXX XXXXX',
-    href: 'tel:+91XXXXXXXXXX',
+    title: 'Phone (Landline)',
+    value: '0487 2332166 / 2323266',
+    href: 'tel:04872332166',
+  },
+  {
+    icon: (
+      <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+      </svg>
+    ),
+    title: 'Mobile',
+    value: '+91 83019 59266 / 94471 23266',
+    href: 'tel:+918301959266',
   },
   {
     icon: (
@@ -22,24 +42,22 @@ const CONTACT_INFO = [
       </svg>
     ),
     title: 'Email',
-    value: 'info@capricorndiagnostics.com',
-    href: 'mailto:info@capricorndiagnostics.com',
+    value: 'capri.diagnostics@gmail.com',
+    href: 'mailto:capri.diagnostics@gmail.com',
   },
   {
     icon: (
       <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-        <circle cx="12" cy="10" r="3"/>
+        <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 3h-8a2 2 0 0 0-2 2v2h12V5a2 2 0 0 0-2-2z"/>
       </svg>
     ),
-    title: 'Address',
-    value: 'Kerala, India',
+    title: 'GSTIN',
+    value: '32AACFC9612N1ZE',
   },
   {
     icon: (
       <svg width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10"/>
-        <polyline points="12 6 12 12 16 14"/>
+        <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
       </svg>
     ),
     title: 'Office Hours',
@@ -108,7 +126,7 @@ export default function Contact() {
                     <h4>{item.title}</h4>
                     {item.href
                       ? <a href={item.href}>{item.value}</a>
-                      : <p>{item.value}</p>
+                      : <p style={{ whiteSpace: 'pre-line' }}>{item.value}</p>
                     }
                   </div>
                 </div>
@@ -172,12 +190,18 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Map Placeholder */}
-          <div className="map-placeholder">
-            <svg width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-            </svg>
-            <span>Google Maps — Kerala, India<br/><small style={{ fontSize: '0.75rem', opacity: 0.7 }}>Embed your Google Maps iframe here</small></span>
+          {/* Google Maps Embed */}
+          <div style={{ borderRadius: '1rem', overflow: 'hidden', marginTop: '2rem', boxShadow: '0 4px 24px rgba(0,0,0,0.08)', border: '1px solid var(--gray-200)' }}>
+            <iframe
+              title="Capricorn Diagnostics Location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3927.0!2d76.2144!3d10.5276!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba7ef!2sChembukkavu%2C%20Thrissur%2C%20Kerala%20680020!5e0!3m2!1sen!2sin!4v1"
+              width="100%"
+              height="400"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
         </div>
       </section>

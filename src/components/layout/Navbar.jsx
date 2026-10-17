@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
+import logo from '../../assets/logo.jpg';
 import '../../styles/navbar.css';
 
 const navLinks = [
@@ -30,7 +31,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link to="/" className="navbar-logo">
-            <div className="navbar-logo-icon">CD</div>
+            <img src={logo} alt="Capricorn Diagnostics" className="navbar-logo-img" />
             <div className="navbar-logo-text">
               <span className="brand-name">Capricorn Diagnostics</span>
               <span className="brand-tagline">Diagnostic Products Distributor</span>

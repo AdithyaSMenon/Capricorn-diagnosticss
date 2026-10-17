@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import Layout from '../components/layout/Layout';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import logo from '../assets/logo.jpg';
 import '../styles/home.css';
 
 const DEFAULT_STATS = [
@@ -165,9 +166,10 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-image-wrap">
-              <div className="hero-placeholder">
-                <svg width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-                <span>Hero Image Placeholder</span>
+              <div className="hero-logo-panel">
+                <img src={logo} alt="Capricorn Diagnostics" className="hero-logo-img" />
+                <div className="hero-logo-tagline">Kerala's Trusted Diagnostic Partner</div>
+                <div className="hero-logo-since">Est. 1998 · Thrissur, Kerala</div>
               </div>
             </div>
           </div>

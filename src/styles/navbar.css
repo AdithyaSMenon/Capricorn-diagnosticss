@@ -38,18 +38,15 @@
   text-decoration: none;
 }
 
-.navbar-logo-icon {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--primary), var(--teal));
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 800;
-  font-size: 1.125rem;
+.navbar-logo-img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
   flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  background: white;
+  padding: 3px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.1);
 }
 
 .navbar-logo-text {

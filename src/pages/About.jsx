@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
+import logo from '../assets/logo.jpg';
 import '../styles/about.css';
 
 const COMMITMENT = [
@@ -51,8 +52,22 @@ export default function About() {
               </p>
             </div>
             <div className="story-image">
-              <svg width="48" height="48" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <span style={{ fontSize: '0.8125rem', color: 'var(--gray-400)', fontWeight: 500 }}>Company Image Placeholder</span>
+              <img
+                src={logo}
+                alt="Capricorn Diagnostics"
+                style={{
+                  width: '100%',
+                  maxWidth: '320px',
+                  objectFit: 'contain',
+                  borderRadius: 'var(--radius-xl)',
+                  background: 'white',
+                  padding: '2rem',
+                  boxShadow: '0 8px 32px rgba(26,86,219,0.12)',
+                  border: '1px solid var(--gray-100)',
+                  display: 'block',
+                  margin: '0 auto',
+                }}
+              />
             </div>
           </div>
         </div>
