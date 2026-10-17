@@ -24,8 +24,7 @@ import { isSupabaseConfigured } from './lib/supabase';
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <LoadingSpinner />;
-  // Require login only if Supabase is configured; otherwise allow demo access
-  if (!user && isSupabaseConfigured) return <Navigate to="/admin/login" replace />;
+  if (!user) return <Navigate to="/admin/login" replace />;
   return children;
 }
 

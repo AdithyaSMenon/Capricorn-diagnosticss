@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import logo from '../../assets/logo.jpg';
 import '../../styles/admin.css';
 
 export default function AdminLogin() {
@@ -27,8 +28,8 @@ export default function AdminLogin() {
   return (
     <div className="admin-login-page">
       <div className="admin-login-card">
-        <div className="admin-logo" style={{ justifyContent: 'center', borderBottom: 'none', padding: 0, marginBottom: '1.5rem' }}>
-          <div className="admin-logo-icon">CD</div>
+        <div className="admin-logo" style={{ justifyContent: 'center', borderBottom: 'none', padding: 0, marginBottom: '1.5rem', gap: '0.75rem' }}>
+          <img src={logo} alt="Capricorn Diagnostics" style={{ width: '48px', height: '48px', objectFit: 'contain', borderRadius: '8px', background: 'white', padding: '3px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} />
           <div>
             <span style={{ fontWeight: 700, color: 'var(--gray-900)', fontSize: '0.9375rem', display: 'block' }}>Capricorn Diagnostics</span>
             <small style={{ color: 'var(--gray-400)', fontSize: '0.6875rem' }}>Admin Portal</small>
