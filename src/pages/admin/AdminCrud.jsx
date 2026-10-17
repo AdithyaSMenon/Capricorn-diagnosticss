@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
+import { uploadProductFile } from '../../lib/storage';
 import LoadingSpinner from '../../components/ui/LoadingSpinner';
 
 function Modal({ title, onClose, children }) {
@@ -136,16 +137,184 @@ export function AdminCategories() {
 }
 
 export function AdminBrands() {
+  const [brands, setBrands] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(null); // 'add' | 'edit'
+  const [form, setForm] = useState({ name: '', description: '', logo_url: '' });
+  const [logoFile, setLogoFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const load = async () => {
+    const { data } = await supabase.from('brands').select('*').order('name');
+    setBrands(data || []);
+    setLoading(false);
+  };
+
+  useEffect(() => { load(); }, []);
+
+  const openAdd = () => {
+    setForm({ name: '', description: '', logo_url: '' });
+    setLogoFile(null);
+    setPreviewUrl('');
+    setErrorMsg('');
+    setModal('add');
+  };
+
+  const openEdit = (b) => {
+    setForm({ id: b.id, name: b.name, description: b.description || '', logo_url: b.logo_url || '' });
+    setLogoFile(null);
+    setPreviewUrl(b.logo_url || '');
+    setErrorMsg('');
+    setModal('edit');
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLogoFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setErrorMsg('');
+
+    let finalLogoUrl = form.logo_url;
+
+    if (logoFile) {
+      try {
+        setUploading(true);
+        finalLogoUrl = await uploadProductFile(logoFile, 'product-images');
+      } catch (err) {
+        setErrorMsg(`Failed to upload logo: ${err.message}`);
+        setSaving(false);
+        setUploading(false);
+        return;
+      }
+      setUploading(false);
+    }
+
+    const payload = {
+      name: form.name,
+      description: form.description || null,
+      logo_url: finalLogoUrl || null,
+    };
+
+    if (modal === 'add') {
+      const { error } = await supabase.from('brands').insert([payload]);
+      if (error) { setErrorMsg(error.message); setSaving(false); return; }
+    } else {
+      const { error } = await supabase.from('brands').update(payload).eq('id', form.id);
+      if (error) { setErrorMsg(error.message); setSaving(false); return; }
+    }
+
+    setSaving(false);
+    setModal(null);
+    load();
+  };
+
+  const handleDelete = async (id, name) => {
+    if (!confirm(`Delete brand "${name}"?`)) return;
+    await supabase.from('brands').delete().eq('id', id);
+    load();
+  };
+
   return (
-    <CRUDPage
-      title="Brands"
-      table="brands"
-      fields={[
-        { key: 'name', label: 'Brand Name', required: true, placeholder: 'e.g. Roche Diagnostics' },
-        { key: 'description', label: 'Description', type: 'textarea', placeholder: 'Short brand description' },
-        { key: 'logo_url', label: 'Logo URL', placeholder: 'https://... (image URL)' },
-      ]}
-    />
+    <div>
+      <div className="admin-table-wrap">
+        <div className="admin-table-header">
+          <h3>Brand Partners ({brands.length})</h3>
+          <button className="btn btn-primary btn-sm" onClick={openAdd}>+ Add Brand</button>
+        </div>
+
+        {loading ? <LoadingSpinner /> : brands.length === 0 ? (
+          <p style={{ padding: '2rem', color: 'var(--gray-400)', textAlign: 'center' }}>No brands yet.</p>
+        ) : (
+          <table className="admin-table">
+            <thead>
+              <tr>
+                <th style={{ width: 60 }}>Logo</th>
+                <th>Brand Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {brands.map(b => (
+                <tr key={b.id}>
+                  <td>
+                    {b.logo_url ? (
+                      <img src={b.logo_url} alt={b.name} style={{ width: 44, height: 44, objectFit: 'contain', background: '#fff', borderRadius: 4, border: '1px solid var(--gray-200)', padding: 2 }} />
+                    ) : (
+                      <div style={{ width: 44, height: 44, borderRadius: 4, background: 'var(--gray-100)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.625rem', color: 'var(--gray-400)' }}>No Logo</div>
+                    )}
+                  </td>
+                  <td style={{ fontWeight: 600 }}>{b.name}</td>
+                  <td style={{ color: 'var(--gray-500)', fontSize: '0.875rem' }}>{b.description || '—'}</td>
+                  <td>
+                    <div className="admin-table-actions">
+                      <button className="btn btn-ghost btn-sm" onClick={() => openEdit(b)}>Edit</button>
+                      <button className="btn btn-sm" style={{ background: '#fef2f2', color: 'var(--error)' }} onClick={() => handleDelete(b.id, b.name)}>Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      {modal && (
+        <Modal title={modal === 'add' ? 'Add Brand Partner' : `Edit ${form.name}`} onClose={() => setModal(null)}>
+          <form onSubmit={handleSave}>
+            <div className="modal-body">
+              {errorMsg && <div className="login-error" style={{ marginBottom: '1rem' }}>{errorMsg}</div>}
+              
+              <div className="form-group">
+                <label>Brand Name *</label>
+                <input className="form-control" required value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g. Roche Diagnostics" />
+              </div>
+
+              <div className="form-group">
+                <label>Brand Logo Photo</label>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  {previewUrl ? (
+                    <img src={previewUrl} alt="Logo preview" style={{ width: 64, height: 64, objectFit: 'contain', borderRadius: 6, border: '1px solid var(--gray-200)', background: '#fff', padding: 4 }} />
+                  ) : (
+                    <div style={{ width: 64, height: 64, borderRadius: 6, background: 'var(--gray-100)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', color: 'var(--gray-400)', border: '1px dashed var(--gray-300)' }}>Preview</div>
+                  )}
+                  <div style={{ flex: 1 }}>
+                    <input type="file" accept="image/*" className="form-control" onChange={handleFileChange} />
+                    <small style={{ color: 'var(--gray-400)', fontSize: '0.75rem', display: 'block', marginTop: 4 }}>PNG, JPG, SVG or WEBP</small>
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label>Or Paste Logo Image URL</label>
+                <input className="form-control" value={form.logo_url} onChange={e => { setForm(f => ({ ...f, logo_url: e.target.value })); if (!logoFile) setPreviewUrl(e.target.value); }} placeholder="https://example.com/logo.png" />
+              </div>
+
+              <div className="form-group">
+                <label>Description</label>
+                <textarea className="form-control" rows={3} value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} placeholder="Short description of products or company" />
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-ghost btn-sm" onClick={() => setModal(null)}>Cancel</button>
+              <button type="submit" className="btn btn-primary btn-sm" disabled={saving || uploading}>
+                {uploading ? 'Uploading Photo...' : saving ? 'Saving...' : 'Save Brand'}
+              </button>
+            </div>
+          </form>
+        </Modal>
+      )}
+    </div>
   );
 }
 

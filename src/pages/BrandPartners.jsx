@@ -23,7 +23,7 @@ const FALLBACK_BRANDS = [
 function BrandCard({ brand }) {
   return (
     <div className="brand-card-full">
-      <div className="brand-logo-placeholder">
+      <div className="brand-logo-placeholder" style={brand.logo_url ? { background: '#ffffff', border: '1px solid var(--gray-200)', padding: '0.5rem' } : {}}>
         {brand.logo_url
           ? <img src={brand.logo_url} alt={brand.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
           : <span style={{ fontSize: '0.625rem', textAlign: 'center', color: 'var(--gray-400)' }}>Logo<br/>Placeholder</span>
